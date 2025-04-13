@@ -32,9 +32,10 @@ hanoi:
     sw $s3, 0($sp)
 
     addi $s0, $s0, -1
-    move $s1, $s3
-    move $s2, $s2
-    move $s3, $s1
+    # swap s2 and s3
+    addi $t1, $s2, 0
+    addi $s2, $s3, 0
+    addi $s3, $t1, 0
     jal hanoi
 
     lw $ra, 16($sp)
@@ -64,12 +65,27 @@ hanoi:
     la $a0, string4
     syscall
 
+    addi $sp, $sp, -20
+    sw $ra, 16($sp)
+    sw $s0, 12($sp)
+    sw $s1, 8($sp)
+    sw $s2, 4($sp)
+    sw $s3, 0($sp)
+
     addi $s0, $s0, -1
-    move $s1, $s3
-    move $s2, $s2
-    move $s3, $s1
+    # swap $s1 and $s3
+    addi $t1, $s1, 0
+    addi $s1, $s3, 0
+    addi $s3, $t1, 0
+
     jal hanoi
 
+    lw $ra, 16($sp)
+    lw $s0, 12($sp)
+    lw $s1, 8($sp)
+    lw $s2, 4($sp)
+    lw $s3, 0($sp)
+    addi $sp, $sp, 20
     jr $ra
 
 return_hanoi:
